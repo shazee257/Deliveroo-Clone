@@ -12,7 +12,7 @@ import { styled } from 'nativewind';
 import { useNavigation } from '@react-navigation/native';
 import Categories from '../components/Categories';
 import FeaturedRow from '../components/FeaturedRow';
-import sanityClient from '../sanity';
+import sanity from '../sanity';
 
 const Text = styled(RNText);
 const View = styled(RNView);
@@ -31,10 +31,10 @@ export default function HomeScreen() {
     }, []);
 
     useEffect(() => {
-        sanityClient.fetch(
+        sanity.fetch(
             `*[_type == "featured"] {
                 ...,
-                Restaurants[]->{
+                restaurants[]->{
                   ...,
                   dishes[]->{
                     ...
@@ -81,7 +81,7 @@ export default function HomeScreen() {
                 <Categories />
 
                 {/* Featured Rows */}
-                {featuredCategories?.map((category) => (
+                {featuredCategories.map((category) => (
                     <FeaturedRow
                         key={category._id}
                         id={category._id}
@@ -90,7 +90,6 @@ export default function HomeScreen() {
                     />
                 ))}
             </ScrollView>
-
         </SafeAreaView>
     )
 }

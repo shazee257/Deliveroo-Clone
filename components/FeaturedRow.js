@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { styled } from 'nativewind';
 import { ArrowRightIcon } from 'react-native-heroicons/outline';
 import RestaurantCard from './RestaurantCard';
-import sanityClient from '../sanity';
+import sanity from '../sanity';
 
 const View = styled(RNView);
 const Text = styled(RNText);
@@ -22,10 +22,10 @@ const FeaturedRow = ({ title, description, id }) => {
     const [restaurants, setRestaurants] = useState([]);
 
     useEffect(() => {
-        sanityClient.fetch(
+        sanity.fetch(
             `*[_type == "featured" && _id == "${id}"] {
                 ...,
-                Restaurants[]->{
+                restaurants[]->{
                   ...,
                   dishes[]->,
                     type-> {
@@ -34,8 +34,7 @@ const FeaturedRow = ({ title, description, id }) => {
                 }
               }[0]`, { id }
         ).then((data) => {
-            console.log("Restaurant Length: ", data?.Restaurants.length);
-            setRestaurants(data?.Restaurants);
+            setRestaurants(data?.restaurants);
         });
     }, []);
 

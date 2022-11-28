@@ -10,7 +10,7 @@ import { SafeAreaView as RNSafeAreaView } from 'react-native-safe-area-context';
 import { styled } from 'nativewind';
 import { StarIcon, MapPinIcon } from 'react-native-heroicons/outline';
 import { urlFor } from '../sanity';
-
+import { useNavigation } from '@react-navigation/native';
 
 const Text = styled(RNText);
 const View = styled(RNView);
@@ -30,9 +30,26 @@ const RestaurantCard = ({
     lng,
     lat,
 }) => {
+    const navigation = useNavigation();
 
     return (
-        <TouchableOpacity className='bg-white mr-3' activeOpacity={0.8}>
+        <TouchableOpacity
+            onPress={() => {
+                navigation.navigate('Restaurant', {
+                    id,
+                    imgUrl,
+                    title,
+                    rating,
+                    genre,
+                    address,
+                    short_description,
+                    dishes,
+                    lng,
+                    lat,
+                })
+            }}
+
+            className='bg-white mr-3' activeOpacity={0.8}>
             <Image className='h-36 w-64' source={{
                 uri: urlFor(imgUrl).url(),
             }} />
@@ -45,7 +62,6 @@ const RestaurantCard = ({
                         <Text className='text-green-500'>{rating}</Text> - {genre}
                     </Text>
                 </View>
-
 
                 <View className='flex-row items-center space-x-1'>
                     <MapPinIcon size={22} color="gray" opacity={0.4} />
