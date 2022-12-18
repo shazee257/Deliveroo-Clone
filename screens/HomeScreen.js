@@ -42,7 +42,6 @@ export default function HomeScreen() {
                   
                 }
               }`).then((data) => {
-                console.log("featured Categories length: ", data.length);
                 setFeaturedCategories(data);
             });
     }, []);
